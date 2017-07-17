@@ -2,15 +2,12 @@
 
 @section('content')
     @role('admin')
-        @include('dashboards.admin')
+        @include('admin.dashboard')
     @endrole
     @role('teacher')
-        @include('dashboards.teacher')
-    @endrole
-    @role('class-teacher')
-        @include('dashboards.class-teacher')
+        @include('teacher.dashboard')
     @endrole
     @role('parent')
-        @include('dashboards.parent')
+        @include('parent.dashboard')
     @endrole
 @endsection
