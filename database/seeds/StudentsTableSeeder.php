@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Student;
 use Illuminate\Database\Seeder;
 
 class StudentsTableSeeder extends Seeder
@@ -11,6 +12,8 @@ class StudentsTableSeeder extends Seeder
      */
     public function run()
     {
+    	Student::truncate();
+
         factory(App\Models\Student::class, 50)->create();
     }
 }

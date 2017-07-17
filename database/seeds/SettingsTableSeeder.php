@@ -63,9 +63,7 @@ class SettingsTableSeeder extends Seeder
             ]
         ];
 
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('settings')->truncate();
         DB::table('settings')->insert($settings);
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

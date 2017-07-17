@@ -13,16 +13,15 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('roles')->truncate();
+        DB::table('permissions')->truncate();
+        DB::table('role_user')->truncate();
+        DB::table('permission_role')->truncate();
+
         $adminRole = Role::create([
             'name'         => 'admin',
             'display_name' => 'Administrator',
             'description'  => 'Manages everything'
-        ]);
-
-        $classTeacherRole = Role::create([
-            'name'         => 'class-teacher',
-            'display_name' => 'Class Teacher',
-            'description'  => 'Manages class'
         ]);
 
         $teacherRole = Role::create([
@@ -62,30 +61,7 @@ class RolesTableSeeder extends Seeder
         ]);
 
         /*
-         * Class Teacher CRUD Permission
-         */
-        $createClassTeacherPermission = Permission::create([
-            'name'         => 'create-class-teacher',
-            'display_name' => 'Create Class Teacher',
-            'description'  => 'Can create Class Teacher'
-        ]);
-        $viewClassTeacherPermission   = Permission::create([
-            'name'         => 'view-class-teacher',
-            'display_name' => 'View Class Teacher',
-            'description'  => 'Can view Class Teacher'
-        ]);
-        $updateClassTeacherPermission = Permission::create([
-            'name'         => 'update-class-teacher',
-            'display_name' => 'Update Class Teacher',
-            'description'  => 'Can update Class Teacher'
-        ]);
-        $deleteClassTeacherPermission = Permission::create([
-            'name'         => 'delete-class-teacher',
-            'display_name' => 'Delete Class Teacher',
-            'description'  => 'Can delete Class Teacher'
-        ]);
-        /*
-         * Class Teacher CRUD Permission
+         * Teacher CRUD Permission
          */
         $createTeacherPermission = Permission::create([
             'name'         => 'create-teacher',
@@ -108,7 +84,7 @@ class RolesTableSeeder extends Seeder
             'description'  => 'Can delete Teacher'
         ]);
         /*
-         * Class Teacher CRUD Permission
+         * Parent CRUD Permission
          */
         $createParentPermission = Permission::create([
             'name'         => 'create-parent',
@@ -130,16 +106,59 @@ class RolesTableSeeder extends Seeder
             'display_name' => 'Delete Parent',
             'description'  => 'Can delete Parent'
         ]);
+        /*
+         * Post CRUD Permission
+         */
+        $createPostPermission = Permission::create([
+            'name'         => 'create-post',
+            'display_name' => 'Create Post',
+            'description'  => 'Can create Post'
+        ]);
+        $viewPostPermission   = Permission::create([
+            'name'         => 'view-post',
+            'display_name' => 'View Post',
+            'description'  => 'Can view Post'
+        ]);
+        $updatePostPermission = Permission::create([
+            'name'         => 'update-post',
+            'display_name' => 'Update Post',
+            'description'  => 'Can update Post'
+        ]);
+        $deletePostPermission = Permission::create([
+            'name'         => 'delete-post',
+            'display_name' => 'Delete Post',
+            'description'  => 'Can delete Post'
+        ]);
+        /*
+         * Notice CRUD Permission
+         */
+        $createNoticePermission = Permission::create([
+            'name'         => 'create-notice',
+            'display_name' => 'Create Notice',
+            'description'  => 'Can create Notice'
+        ]);
+        $viewNoticePermission   = Permission::create([
+            'name'         => 'view-notice',
+            'display_name' => 'View Notice',
+            'description'  => 'Can view Notice'
+        ]);
+        $updateNoticePermission = Permission::create([
+            'name'         => 'update-notice',
+            'display_name' => 'Update Notice',
+            'description'  => 'Can update Notice'
+        ]);
+        $deleteNoticePermission = Permission::create([
+            'name'         => 'delete-notice',
+            'display_name' => 'Delete Notice',
+            'description'  => 'Can delete Notice'
+        ]);
+
 
         $adminRole->attachPermissions([
             $createAdminPermission,
             $viewAdminPermission,
             $updateAdminPermission,
             $deleteAdminPermission,
-            $createClassTeacherPermission,
-            $viewClassTeacherPermission,
-            $updateClassTeacherPermission,
-            $deleteClassTeacherPermission,
             $createTeacherPermission,
             $viewTeacherPermission,
             $updateTeacherPermission,
@@ -148,17 +167,14 @@ class RolesTableSeeder extends Seeder
             $viewParentPermission,
             $updateParentPermission,
             $deleteParentPermission,
-        ]);
-
-        $classTeacherRole->attachPermissions([
-            $createTeacherPermission,
-            $viewTeacherPermission,
-            $updateTeacherPermission,
-            $deleteTeacherPermission,
-            $createParentPermission,
-            $viewParentPermission,
-            $updateParentPermission,
-            $deleteParentPermission,
+            $createPostPermission,
+            $viewPostPermission,
+            $updatePostPermission,
+            $deletePostPermission,
+            $createNoticePermission,
+            $viewNoticePermission,
+            $updateNoticePermission,
+            $deleteNoticePermission,
         ]);
 
         $teacherRole->attachPermissions([
@@ -166,6 +182,17 @@ class RolesTableSeeder extends Seeder
             $viewParentPermission,
             $updateParentPermission,
             $deleteParentPermission,
+            $createPostPermission,
+            $viewPostPermission,
+            $updatePostPermission,
+            $deletePostPermission,
+        ]);
+
+        $parentRole->attachPermissions([
+            $createPostPermission,
+            $viewPostPermission,
+            $updatePostPermission,
+            $deletePostPermission,
         ]);
     }
 }

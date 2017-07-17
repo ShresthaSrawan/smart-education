@@ -45,9 +45,7 @@ class GradesTableSeeder extends Seeder
             ]
         ];
 
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('grades')->truncate();
         DB::table('grades')->insert($grades);
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

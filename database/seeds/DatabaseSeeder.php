@@ -11,10 +11,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         $this->call(RolesTableSeeder::class);
-         $this->call(UsersTableSeeder::class);
-         $this->call(SettingsTableSeeder::class);
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        
+        $this->call(RolesTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
+        $this->call(SettingsTableSeeder::class);
         $this->call(GradesTableSeeder::class);
         $this->call(StudentsTableSeeder::class);
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
