@@ -15,4 +15,14 @@
         <label for="username">Username</label>
         <input type="text" name="username" class="form-control" id="username" placeholder="Username">
     </div>
+    <div class="form-group">
+        <div class="col-sm-6">
+            <label for="password">Password</label>
+            <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+        </div>
+        <div class="col-sm-6">
+            <label for="password_confirmation">Confirm Password</label>
+            <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="Confirm Password">
+        </div>
+    </div>
 </div>

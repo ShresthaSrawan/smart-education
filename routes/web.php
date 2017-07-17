@@ -30,14 +30,14 @@ Route::group([ 'middleware' => 'auth' ], function ()
     */
     Route::group([ 'as' => 'admin.', 'prefix' => 'admin' ], function ()
     {
-        Route::get('/', 'AdminController@index')->name('index');
-        Route::post('/', 'AdminController@store')->name('store');
-        Route::get('/create', 'AdminController@create')->name('create');
-        Route::post('/datatable', 'AdminController@datatable')->name('datatable');
-        Route::get('/{user}/edit', 'AdminController@edit')->name('edit');
-        Route::get('/{user}', 'AdminController@show')->name('show');
-        Route::put('/{user}', 'AdminController@update')->name('update');
-        Route::delete('/{user}', 'AdminController@destroy')->name('destroy');
+        Route::get('/', 'AdminController@index')->name('index')->middleware('permission:view-admin');
+        Route::post('/', 'AdminController@store')->name('store')->middleware('permission:create-admin');
+        Route::get('/create', 'AdminController@create')->name('create')->middleware('permission:create-admin');
+        Route::post('/datatable', 'AdminController@datatable')->name('datatable')->middleware('permission:view-admin');
+        Route::get('/{user}/edit', 'AdminController@edit')->name('edit')->middleware('permission:update-admin');
+        Route::get('/{user}', 'AdminController@show')->name('show')->middleware('permission:view-admin');
+        Route::put('/{user}', 'AdminController@update')->name('update')->middleware('permission:update-admin');
+        Route::delete('/{user}', 'AdminController@destroy')->name('destroy')->middleware('permission:delete-admin');
     });
 
     /*
@@ -49,14 +49,14 @@ Route::group([ 'middleware' => 'auth' ], function ()
     */
     Route::group([ 'as' => 'teacher.', 'prefix' => 'teacher' ], function ()
     {
-        Route::get('/', 'TeacherController@index')->name('index');
-        Route::post('/', 'TeacherController@store')->name('store');
-        Route::get('/create', 'TeacherController@create')->name('create');
-        Route::post('/datatable', 'TeacherController@datatable')->name('datatable');
-        Route::get('/{user}/edit', 'TeacherController@edit')->name('edit');
-        Route::get('/{user}', 'TeacherController@show')->name('show');
-        Route::put('/{user}', 'TeacherController@update')->name('update');
-        Route::delete('/{user}', 'TeacherController@destroy')->name('destroy');
+        Route::get('/', 'TeacherController@index')->name('index')->middleware('permission:view-teacher');
+        Route::post('/', 'TeacherController@store')->name('store')->middleware('permission:create-teacher');
+        Route::get('/create', 'TeacherController@create')->name('create')->middleware('permission:create-teacher');
+        Route::post('/datatable', 'TeacherController@datatable')->name('datatable')->middleware('permission:view-teacher');
+        Route::get('/{user}/edit', 'TeacherController@edit')->name('edit')->middleware('permission:update-teacher');
+        Route::get('/{user}', 'TeacherController@show')->name('show')->middleware('permission:view-teacher');
+        Route::put('/{user}', 'TeacherController@update')->name('update')->middleware('permission:update-teacher');
+        Route::delete('/{user}', 'TeacherController@destroy')->name('destroy')->middleware('permission:delete-teacher');
     });
 
     /*
@@ -68,13 +68,13 @@ Route::group([ 'middleware' => 'auth' ], function ()
     */
     Route::group([ 'as' => 'parent.', 'prefix' => 'parent' ], function ()
     {
-        Route::get('/', 'ParentController@index')->name('index');
-        Route::post('/', 'ParentController@store')->name('store');
-        Route::get('/create', 'ParentController@create')->name('create');
-        Route::post('/datatable', 'ParentController@datatable')->name('datatable');
-        Route::get('/{user}/edit', 'ParentController@edit')->name('edit');
-        Route::get('/{user}', 'ParentController@show')->name('show');
-        Route::put('/{user}', 'ParentController@update')->name('update');
-        Route::delete('/{user}', 'ParentController@destroy')->name('destroy');
+        Route::get('/', 'ParentController@index')->name('index')->middleware('permission:view-parent');
+        Route::post('/', 'ParentController@store')->name('store')->middleware('permission:create-parent');
+        Route::get('/create', 'ParentController@create')->name('create')->middleware('permission:create-parent');
+        Route::post('/datatable', 'ParentController@datatable')->name('datatable')->middleware('permission:view-parent');
+        Route::get('/{user}/edit', 'ParentController@edit')->name('edit')->middleware('permission:update-parent');
+        Route::get('/{user}', 'ParentController@show')->name('show')->middleware('permission:view-parent');
+        Route::put('/{user}', 'ParentController@update')->name('update')->middleware('permission:update-parent');
+        Route::delete('/{user}', 'ParentController@destroy')->name('destroy')->middleware('permission:delete-parent');
     });
 });

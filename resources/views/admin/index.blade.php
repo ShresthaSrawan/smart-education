@@ -59,7 +59,7 @@
                     {"data": "first_name", "name": "first_name"},
                     {"data": "first_name", "name": "first_name"},
                     {"data": "email", "name": "email"},
-                    {"data": "id","class": "text-right", "orderable": false, "render": function(data,meta, row) {
+                    {"data": "username","class": "text-right", "orderable": false, "render": function(data,meta, row) {
                         return "<form method='POST' action='/user/"+data+"'>" +
                             "<div class='uk-button-group'>" +
                             "<a href='/user/"+data+"' class='btn btn-sm'>view</a>" +

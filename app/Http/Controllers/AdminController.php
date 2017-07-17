@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreAdmin;
+use App\Http\Requests\StoreUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Facades\Datatables;
 
 class AdminController extends Controller
@@ -23,7 +24,10 @@ class AdminController extends Controller
      */
     public function datatable()
     {
-        return Datatables::eloquent(User::hasRole('admin'))->make(true);
+        return Datatables::of(User::all()->filter(function ($item)
+        {
+            return $item->hasRole('admin');
+        }))->make(true);
     }
 
     /**
@@ -37,14 +41,18 @@ class AdminController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param StoreAdmin|Request $request
+     * @param StoreUser|Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAdmin $request)
+    public function store(StoreUser $request)
     {
-        User::create($request->data());
+        DB::transaction(function () use ($request)
+        {
+            $user = User::create($request->data());
+            $user->attachRole(1);
+        });
 
-        return redirect('admin.index')->withSuccess(trans('messages.create_success', [ 'entity' => 'Admin' ]));
+        return redirect()->route('admin.index')->withSuccess(trans('messages.create_success', [ 'entity' => 'Admin' ]));
     }
 
     /**
@@ -77,7 +85,7 @@ class AdminController extends Controller
     {
         $user->update($request->data());
 
-        return redirect('admin.index')->withSuccess(trans('messages.update_success', [ 'entity' => 'Admin' ]));
+        return redirect()->route('admin.index')->withSuccess(trans('messages.update_success', [ 'entity' => 'Admin' ]));
     }
 
     /**
@@ -89,6 +97,6 @@ class AdminController extends Controller
     {
         $user->delete();
 
-        return redirect('admin.index')->withSuccess(trans('messages.delete_success', [ 'entity' => 'Admin' ]));
+        return redirect()->route('admin.index')->withSuccess(trans('messages.delete_success', [ 'entity' => 'Admin' ]));
     }
 }

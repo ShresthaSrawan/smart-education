@@ -21,6 +21,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboards.'.auth()->user()->role->slug);
+        return view('index');
     }
 }

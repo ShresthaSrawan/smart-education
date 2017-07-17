@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, EntrustUserTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -18,8 +19,7 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
-        'username',
-        'role_id'
+        'username'
     ];
 
     /**
@@ -36,23 +36,6 @@ class User extends Authenticatable
     public function getRouteKeyName()
     {
         return 'username';
-    }
-
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
-
-    public function isRole($role)
-    {
-        return $this->role->slug == $role || $this->role_id == $role;
-    }
-
-    public function scopeHasRole($query, $role)
-    {
-        $role_id = Role::whereSlug($role)->firstOrFail()->id;
-
-        return $query->where('role_id', $role_id);
     }
 
     public function getIsGradeAssignedAttribute()
