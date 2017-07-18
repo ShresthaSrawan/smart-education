@@ -1,16 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Users')
+@section('title', 'Grades')
 
 @section('content')
     <div class="container">
         <div class="panel panel-default">
             <div class="panel-heading">
-                User List
-                <a class="btn btn-sm btn-primary pull-right" href="{{ route('grade.create') }}">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    Add
-                </a>
+                Grade List
+                <button class="btn btn-sm pull-right" type="button" data-toggle="modal" data-target="#subjectModal"><i class="fa fa-plus"></i></button>
             </div>
             <div class="panel-body">
                 <table id="dt_grade" class="table order-column hover" data-source="{{route('grade.datatable')}}">
@@ -29,6 +26,28 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <form action="{{ route('grade.store') }}" method="POST">
+        {{ csrf_field() }}
+        <div class="modal fade" id="subjectModal" tabindex="-1" role="dialog" aria-labelledby="subjectModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="subjectModalLabel">Add Subject</h4>
+                    </div>
+                    <div class="modal-body">
+                        @include('grade.partials.form')
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default btn-close-subject" data-dismiss="modal" :disabled="saving">Close</button>
+                        <button type="button" class="btn btn-primary" :disabled="saving || !new_subject.name || !new_subject.teacher_id">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 @stop
 
 @push('styles')

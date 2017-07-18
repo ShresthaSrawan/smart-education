@@ -13,21 +13,16 @@ class SubjectController extends Controller
     public function index(Grade $grade)
     {
         $teachers = User::type(User::TEACHER)->get()->pluck('name', 'id');
+        $subjects = $grade->subjects()->with('teacher')->get();
 
-        return view('grade.subject.index', compact('grade', 'teachers'));
-    }
-
-    public function data(Grade $grade)
-    {
-        return $grade->subjects()->with('teacher')->get();
+        return view('grade.subject.index', compact('grade', 'teachers', 'subjects'));
     }
 
     public function store(Grade $grade, StoreSubject $request)
     {
         $grade->subjects()->create($request->data());
-        $subjects = $this->data($grade);
 
-        return [ 'status' => 'ok', 'subjects' => $subjects ];
+        return redirect()->route('grade.subject.index', $grade->slug)->withSuccess(trans('messages.create_success', [ 'entity' => 'Subject' ]));
     }
 
     public function destroy(Grade $grade, Subject $subject)
@@ -36,9 +31,7 @@ class SubjectController extends Controller
         if ($subject)
         {
             $subject->delete();
-            $subjects = $this->data($grade);
-
-            return [ 'status' => 'ok', 'subjects' => $subjects ];
+            return redirect()->route('grade.subject.index', $grade->slug)->withSuccess(trans('messages.create_success', [ 'entity' => 'Subject' ]));
         }
         abort('404');
     }

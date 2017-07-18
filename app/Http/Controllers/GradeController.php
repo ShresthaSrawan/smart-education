@@ -16,7 +16,10 @@ class GradeController extends Controller
      */
     public function index()
     {
-        return view('grade.index');
+        $classTeachers = array_filter(Grade::pluck('class_teacher_id')->unique()->toArray());
+        $teachers      = User::type(User::TEACHER)->whereNotIn('id', $classTeachers)->get();
+
+        return view('grade.index', compact('teachers'));
     }
 
     /**
@@ -25,17 +28,6 @@ class GradeController extends Controller
     public function datatable()
     {
         return Datatables::of(Grade::with(['classTeacher', 'subjects']))->make(true);
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function create()
-    {
-        $classTeachers = array_filter(Grade::pluck('class_teacher_id')->unique()->toArray());
-        $teachers      = User::type(User::TEACHER)->whereNotIn('id', $classTeachers)->get();
-
-        return view('grade.create', compact('teachers'));
     }
 
     /**
