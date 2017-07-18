@@ -24,10 +24,7 @@ class AdminController extends Controller
      */
     public function datatable()
     {
-        return Datatables::of(User::all()->filter(function ($item)
-        {
-            return $item->hasRole('admin');
-        }))->make(true);
+        return Datatables::of(User::type(User::ADMIN))->make(true);
     }
 
     /**
@@ -49,7 +46,7 @@ class AdminController extends Controller
         DB::transaction(function () use ($request)
         {
             $user = User::create($request->data());
-            $user->attachRole(1);
+            $user->attachRole(USER::ADMIN);
         });
 
         return redirect()->route('admin.index')->withSuccess(trans('messages.create_success', [ 'entity' => 'Admin' ]));

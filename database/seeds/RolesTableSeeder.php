@@ -152,6 +152,52 @@ class RolesTableSeeder extends Seeder
             'display_name' => 'Delete Notice',
             'description'  => 'Can delete Notice'
         ]);
+        /*
+         * Grade CRUD Permission
+         */
+        $createGradePermission = Permission::create([
+            'name'         => 'create-grade',
+            'display_name' => 'Create Grade',
+            'description'  => 'Can create Grade'
+        ]);
+        $viewGradePermission   = Permission::create([
+            'name'         => 'view-grade',
+            'display_name' => 'View Grade',
+            'description'  => 'Can view Grade'
+        ]);
+        $updateGradePermission = Permission::create([
+            'name'         => 'update-grade',
+            'display_name' => 'Update Grade',
+            'description'  => 'Can update Grade'
+        ]);
+        $deleteGradePermission = Permission::create([
+            'name'         => 'delete-grade',
+            'display_name' => 'Delete Grade',
+            'description'  => 'Can delete Grade'
+        ]);
+        /*
+         * Subject CRUD Permission
+         */
+        $createSubjectPermission = Permission::create([
+            'name'         => 'create-subject',
+            'display_name' => 'Create Subject',
+            'description'  => 'Can create Subject'
+        ]);
+        $viewSubjectPermission   = Permission::create([
+            'name'         => 'view-subject',
+            'display_name' => 'View Subject',
+            'description'  => 'Can view Subject'
+        ]);
+        $updateSubjectPermission = Permission::create([
+            'name'         => 'update-subject',
+            'display_name' => 'Update Subject',
+            'description'  => 'Can update Subject'
+        ]);
+        $deleteSubjectPermission = Permission::create([
+            'name'         => 'delete-subject',
+            'display_name' => 'Delete Subject',
+            'description'  => 'Can delete Subject'
+        ]);
 
 
         $adminRole->attachPermissions([
@@ -175,6 +221,14 @@ class RolesTableSeeder extends Seeder
             $viewNoticePermission,
             $updateNoticePermission,
             $deleteNoticePermission,
+            $createGradePermission,
+            $viewGradePermission,
+            $updateGradePermission,
+            $deleteGradePermission,
+            $createSubjectPermission,
+            $viewSubjectPermission,
+            $updateSubjectPermission,
+            $deleteSubjectPermission,
         ]);
 
         $teacherRole->attachPermissions([

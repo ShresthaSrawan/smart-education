@@ -59,11 +59,11 @@
                     {"data": "first_name", "name": "first_name"},
                     {"data": "first_name", "name": "first_name"},
                     {"data": "email", "name": "email"},
-                    {"data": "id","class": "text-right", "orderable": false, "render": function(data,meta, row) {
-                        return "<form method='POST' action='/user/"+data+"'>" +
+                    {"data": "username","class": "text-right", "orderable": false, "render": function(data,meta, row) {
+                        return "<form method='POST' action='/parent/"+data+"'>" +
                             "<div class='uk-button-group'>" +
-                            "<a href='/user/"+data+"' class='btn btn-sm'>view</a>" +
-                            "<a href='/user/"+data+"/edit' class='btn btn-sm'>edit</a>" +
+                            "<a href='/parent/"+data+"' class='btn btn-sm'>view</a>" +
+                            "<a href='/parent/"+data+"/edit' class='btn btn-sm'>edit</a>" +
                             '{!! method_field('DELETE') !!}' +
                             '{!! csrf_field() !!}' +
                             "<button type='button' class='btn-delete btn btn-sm btn-danger' data-name='"+row.name+"'>remove</button> "+

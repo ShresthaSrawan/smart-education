@@ -17,6 +17,7 @@ class CreateSubjectsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name');
+            $table->string('slug')->unique();
             $table->integer('grade_id')->unsigned();
             $table->integer('teacher_id')->unsigned();
             $table->timestamps();

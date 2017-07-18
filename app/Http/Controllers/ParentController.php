@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreParent;
+use App\Http\Requests\StoreUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Facades\Datatables;
 
 class ParentController extends Controller
@@ -23,7 +25,7 @@ class ParentController extends Controller
      */
     public function datatable()
     {
-        return Datatables::eloquent(User::hasRole('parent'))->make(true);
+        return Datatables::of(User::type(User::PARENT))->make(true);
     }
 
     /**
@@ -37,14 +39,18 @@ class ParentController extends Controller
 
     /**
      * Store a newly created resource in storage.;
-     * @param StoreParent|Request $request
+     * @param StoreUser $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreParent $request)
+    public function store(StoreUser $request)
     {
-        User::create($request->data());
+        DB::transaction(function () use ($request)
+        {
+            $user = User::create($request->data());
+            $user->attachRole(User::PARENT);
+        });
 
-        return redirect('parent.index')->withSuccess(trans('messages.create_success', [ 'entity' => 'Parent' ]));
+        return redirect()->route('parent.index')->withSuccess(trans('messages.create_success', [ 'entity' => 'Parent' ]));
     }
 
     /**
@@ -77,7 +83,7 @@ class ParentController extends Controller
     {
         $user->update($request->data());
 
-        return redirect('parent.index')->withSuccess(trans('messages.update_success', [ 'entity' => 'Parent' ]));
+        return redirect()->route('parent.index')->withSuccess(trans('messages.update_success', [ 'entity' => 'Parent' ]));
     }
 
     /**
@@ -89,6 +95,6 @@ class ParentController extends Controller
     {
         $user->delete();
 
-        return redirect('parent.index')->withSuccess(trans('messages.delete_success', [ 'entity' => 'Parent' ]));
+        return redirect()->route('parent.index')->withSuccess(trans('messages.delete_success', [ 'entity' => 'Parent' ]));
     }
 };

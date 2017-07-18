@@ -17,7 +17,7 @@
                 <div class="panel-body">
                     @include('admin.partials.form')
                 </div>
-                <div class="panel-footer">
+                <div class="panel-footer text-right">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </div>

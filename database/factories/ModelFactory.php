@@ -19,6 +19,7 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker)
     $name = $faker->firstName;
 
     return [
+        'title'          => $faker->title,
         'first_name'     => $name,
         'last_name'      => $faker->lastName,
         'username'       => str_slug($name),

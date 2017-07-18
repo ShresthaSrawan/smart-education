@@ -7,6 +7,7 @@
                         <li><a href="{{ route('admin.index') }}">Admin Users</a></li>
                         <li><a href="{{ route('teacher.index') }}">Teacher Users</a></li>
                         <li><a href="{{ route('parent.index') }}">Parent Users</a></li>
+                        <li><a href="{{ route('grade.index') }}">Manage Class</a></li>
                     </ul>
                 </div>
             </div>

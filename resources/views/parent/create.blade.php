@@ -4,26 +4,23 @@
 
 @section('content')
     <div class="container">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                User Create
-                <a class="btn btn-sm btn-primary pull-right" href="{{ route('parent.index') }}">
-                    <i class="glyphicon glyphicon-arrow-left"></i>
-                    List
-                </a>
-            </div>
-            <div class="panel-body">
-                <form action="{{ route('parent.store') }}">
+        <form action="{{ route('parent.store') }}" method="POST">
+            {{ csrf_field() }}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    User Create
+                    <a class="btn btn-sm btn-primary pull-right" href="{{ route('parent.index') }}">
+                        <i class="glyphicon glyphicon-arrow-left"></i>
+                        List
+                    </a>
+                </div>
+                <div class="panel-body">
                     @include('parent.partials.form')
-                </form>
+                </div>
+                <div class="panel-footer text-right">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 @stop
-
-@push('scripts')
-<script>
-    var roles = JSON.parse('{!! json_encode($roles) !!}');
-</script>
-<script src="{{ mix('js/userform.js') }}"></script>
-@endpush

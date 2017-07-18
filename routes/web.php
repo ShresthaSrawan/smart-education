@@ -11,7 +11,8 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function ()
+{
     return redirect('/home');
 });
 
@@ -76,5 +77,32 @@ Route::group([ 'middleware' => 'auth' ], function ()
         Route::get('/{user}', 'ParentController@show')->name('show')->middleware('permission:view-parent');
         Route::put('/{user}', 'ParentController@update')->name('update')->middleware('permission:update-parent');
         Route::delete('/{user}', 'ParentController@destroy')->name('destroy')->middleware('permission:delete-parent');
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Grade User
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+    Route::group([ 'as' => 'grade.', 'prefix' => 'grade' ], function ()
+    {
+        Route::get('/', 'GradeController@index')->name('index')->middleware('permission:view-grade');
+        Route::post('/', 'GradeController@store')->name('store')->middleware('permission:create-grade');
+        Route::get('/create', 'GradeController@create')->name('create')->middleware('permission:create-grade');
+        Route::post('/datatable', 'GradeController@datatable')->name('datatable')->middleware('permission:view-grade');
+        Route::get('/{grade}/edit', 'GradeController@edit')->name('edit')->middleware('permission:update-grade');
+        Route::get('/{grade}', 'GradeController@show')->name('show')->middleware('permission:view-grade');
+        Route::put('/{grade}', 'GradeController@update')->name('update')->middleware('permission:update-grade');
+        Route::delete('/{grade}', 'GradeController@destroy')->name('destroy')->middleware('permission:delete-grade');
+
+        Route::group([ 'as' => 'subject.', 'prefix' => '/{grade}/subject' ], function ()
+        {
+            Route::get('/', 'SubjectController@index')->name('index')->middleware('permission:view-subject');
+            Route::get('/data', 'SubjectController@data')->name('data')->middleware('permission:view-subject');
+            Route::post('/', 'SubjectController@store')->name('store')->middleware('permission:create-subject');
+            Route::delete('/{subject}', 'SubjectController@destroy')->name('destroy')->middleware('permission:delete-subject');
+        });
     });
 });

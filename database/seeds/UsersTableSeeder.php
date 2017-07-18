@@ -13,7 +13,8 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         User::truncate();
-        $user = factory(User::class)->create();
-        $user->attachRole(1);
+        (factory(User::class)->create())->attachRole(User::ADMIN);
+        (factory(User::class)->create())->attachRole(User::TEACHER);
+        (factory(User::class)->create())->attachRole(User::PARENT);
     }
 }

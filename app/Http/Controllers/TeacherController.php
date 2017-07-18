@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTeacher;
+use App\Http\Requests\StoreUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Facades\Datatables;
 
 class TeacherController extends Controller
@@ -23,7 +25,7 @@ class TeacherController extends Controller
      */
     public function datatable()
     {
-        return Datatables::eloquent(User::hasRole('teacher'))->make(true);
+        return Datatables::of(User::type(User::TEACHER))->make(true);
     }
 
     /**
@@ -37,14 +39,18 @@ class TeacherController extends Controller
 
     /**
      * Store a newly created resource in storage.;
-     * @param StoreTeacher|Request $request
+     * @param StoreUser $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTeacher $request)
+    public function store(StoreUser $request)
     {
-        User::create($request->data());
+        DB::transaction(function () use ($request)
+        {
+            $user = User::create($request->data());
+            $user->attachRole(User::TEACHER);
+        });
 
-        return redirect('teacher.index')->withSuccess(trans('messages.create_success', [ 'entity' => 'Teacher' ]));
+        return redirect()->route('teacher.index')->withSuccess(trans('messages.create_success', [ 'entity' => 'Admin' ]));
     }
 
     /**
@@ -77,7 +83,7 @@ class TeacherController extends Controller
     {
         $user->update($request->data());
 
-        return redirect('teacher.index')->withSuccess(trans('messages.update_success', [ 'entity' => 'Teacher' ]));
+        return redirect()->route('teacher.index')->withSuccess(trans('messages.update_success', [ 'entity' => 'Teacher' ]));
     }
 
     /**
@@ -89,6 +95,6 @@ class TeacherController extends Controller
     {
         $user->delete();
 
-        return redirect('teacher.index')->withSuccess(trans('messages.delete_success', [ 'entity' => 'Teacher' ]));
+        return redirect()->route('teacher.index')->withSuccess(trans('messages.delete_success', [ 'entity' => 'Teacher' ]));
     }
 };
