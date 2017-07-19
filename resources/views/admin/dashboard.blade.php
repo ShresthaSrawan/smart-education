@@ -1,14 +1,19 @@
-<div class="row">
+<div class="row" id="app">
     <div class="col-md-8">
-        @include('common.post')
+        @permission('create-post')
+            @include('common.post')
+        @endpermission
         <hr>
-        <div class="post-lists clearfix">
-            @component('components.post')
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas voluptatem eaque, voluptatum vitae eveniet debitis consequatur rem a voluptate. Quisquam numquam fuga delectus, quos iste earum aliquam hic ad dolore.
-            @endcomponent
+        <div v-infinite-scroll="fetchPosts" infinite-scroll-disabled="busy" infinite-scroll-distance="50" class="post-lists clearfix">
+            <post v-for="post in posts" :key="post.id" :post="post"></post>
+            <loader v-if="busy" />
         </div>
     </div>
     <div class="col-md-4">
-        @include('common.notice')
+        <notice></notice>
     </div>
 </div>
+
+@push('scripts')
+    <script type="text/javascript" src="{{ mix('js/dashboard.js') }}"></script>
+@endpush

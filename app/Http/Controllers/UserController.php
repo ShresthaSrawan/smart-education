@@ -9,37 +9,21 @@ use Yajra\Datatables\Facades\Datatables;
 
 class UserController extends Controller
 {
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index()
+    public function search(Request $request)
     {
-        return view('user.index');
-    }
+        $query = $request->get('query');
 
-    /**
-     * @return mixed
-     */
-    public function datatable()
-    {
-        return Datatables::eloquent(User::with('role'))->make(true);
-    }
+        $users = User::where('first_name', 'like', "%{$query}%")
+            ->orWhere('last_name', 'like', "%{$query}%")
+            ->orWhere('email', 'like', "%{$query}%")
+            ->get()
+            ->map(function($user){
+                return [
+                    'code' => $user->email,
+                    'name' => $user->name
+                ];
+            });
 
-    public function create()
-    {
-        if (auth()->user()->isRole('admin'))
-        {
-            $roles = Role::all();
-        }
-        elseif (auth()->user()->isRole('teacher') && auth()->user()->is_grade_assigned)
-        {
-            $roles = Role::where('slug', '<>', 'admin')->get();
-        }
-        else
-        {
-            $roles = Role::where('slug', 'parent')->get();
-        }
-
-        return view('user.create', compact('roles'));
+        return $users;
     }
 }

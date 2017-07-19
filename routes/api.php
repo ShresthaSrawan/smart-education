@@ -12,7 +12,8 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => 'auth:api'], function() {
+	Route::get('user/search', 'UserController@search')->name('user.search');
+    Route::get('post/list', 'PostController@list')->name('post.list')->middleware('permission:view-post');
+    Route::post('notice', 'NoticeController@store')->name('notice.store')->middleware('permission:create-notice');
 });

@@ -59,7 +59,7 @@ class SettingsTableSeeder extends Seeder
             ],
             [
                 'slug'  => 'placeholder',
-                'value' => '/img/placeholder.jpg'
+                'value' => '/img/placeholder.png'
             ]
         ];
 

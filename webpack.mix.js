@@ -11,5 +11,5 @@ const { mix } = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/subject.js', 'public/js')
+mix.js('resources/assets/js/dashboard.js', 'public/js')
     .version();

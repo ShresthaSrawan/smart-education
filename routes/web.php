@@ -105,4 +105,28 @@ Route::group([ 'middleware' => 'auth' ], function ()
             Route::delete('/{subject}', 'SubjectController@destroy')->name('destroy')->middleware('permission:delete-subject');
         });
     });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Parent User
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+    Route::group([ 'as' => 'post.', 'prefix' => 'post' ], function ()
+    {
+        Route::get('/', 'PostController@store')->name('store')->middleware('permission:create-post');
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Parent User
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+    Route::group([ 'as' => 'notice.', 'prefix' => 'notice' ], function ()
+    {
+        
+    });
 });

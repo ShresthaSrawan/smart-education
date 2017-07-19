@@ -23,7 +23,8 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
-        'username'
+        'username',
+        'api_token'
     ];
 
     /**
@@ -35,7 +36,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $appends = [ 'is_grade_assigned', 'name' ];
+    protected $appends = [ 'is_grade_assigned', 'name', 'thumbnail' ];
 
     public function getRouteKeyName()
     {
@@ -62,5 +63,25 @@ class User extends Authenticatable
     public function image()
     {
         return $this->morphOne(Image::class, 'imageable');
+    }
+
+    public function getThumbnailAttribute()
+    {
+        return $this->thumbnail();
+    }
+
+    public function thumbnail($width=100, $height=100)
+    {
+        return $this->image ? $this->image->thumbnail($width, $height) : "http://via.placeholder.com/{$width}x{$height}?text=Smart+Education";
+    }
+
+    public function setUsernameAttribute($value)
+    {
+        $this->attributes['username'] = $value;
+
+        if ( ! $this->exists)
+        {
+            $this->attributes['api_token'] = str_random(16);
+        }
     }
 }

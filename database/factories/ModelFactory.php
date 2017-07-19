@@ -38,3 +38,12 @@ $factory->define(App\Models\Student::class, function (Faker\Generator $faker)
         'symbol'     => $faker->md5
     ];
 });
+
+$factory->define(App\Models\Post::class, function (Faker\Generator $faker)
+{
+
+    return [
+        'user_id' => 1,
+        'message'  => $faker->paragraph
+    ];
+});
