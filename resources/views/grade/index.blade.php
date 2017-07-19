@@ -1,29 +1,27 @@
-@extends('layouts.app')
+ @extends('layouts.app')
 
 @section('title', 'Grades')
 
 @section('content')
-    <div class="container">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Grade List
-                <button class="btn btn-sm pull-right" type="button" data-toggle="modal" data-target="#subjectModal"><i class="fa fa-plus"></i></button>
-            </div>
-            <div class="panel-body">
-                <table id="dt_grade" class="table order-column hover" data-source="{{route('grade.datatable')}}">
-                    <thead>
-                        <tr>
-                            <th>AVATAR</th>
-                            <th>GRADE</th>
-                            <th>CLASS TEACHER</th>
-                            <th>SUBJECTS</th>
-                            <th>ACTIONS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Grade List
+            <button class="btn btn-sm pull-right" type="button" data-toggle="modal" data-target="#subjectModal"><i class="fa fa-plus"></i></button>
+        </div>
+        <div class="panel-body">
+            <table id="dt_grade" class="table order-column hover" data-source="{{route('grade.datatable')}}">
+                <thead>
+                    <tr>
+                        <th>AVATAR</th>
+                        <th>GRADE</th>
+                        <th>CLASS TEACHER</th>
+                        <th>SUBJECTS</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
     </div>
 

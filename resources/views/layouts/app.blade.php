@@ -16,10 +16,30 @@
     @stack('styles')
 </head>
 <body>
-    <section>
-        @include('layouts.partials.navbar')
+    @include('layouts.partials.navbar')
 
-        @yield('content')
+    <section class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <ul class="nav nav-stacked">
+                            <li><a href="{{ route('admin.index') }}">Admin Users</a></li>
+                            <li><a href="{{ route('teacher.index') }}">Teacher Users</a></li>
+                            <li><a href="{{ route('parent.index') }}">Parent Users</a></li>
+                            <li><a href="{{ route('grade.index') }}">Manage Class</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <h2>{{ date('d') }}</h2>
+                    <h3>{{ date('M') }}</h3>
+                </div>
+            </div>
+            <div class="col-md-9">
+                @yield('content')
+            </div>
+        </div>
     </section>
     
     @include('layouts.footer')

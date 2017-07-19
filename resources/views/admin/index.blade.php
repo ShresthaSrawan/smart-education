@@ -3,29 +3,27 @@
 @section('title', 'Users')
 
 @section('content')
-    <div class="container">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Admin List
-                <a class="btn btn-sm btn-primary pull-right" href="{{ route('admin.create') }}">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    Add
-                </a>
-            </div>
-            <div class="panel-body">
-                <table id="dt_user" class="table order-column hover" data-source="{{route('admin.datatable')}}">
-                    <thead>
-                        <tr>
-                            <th>AVATAR</th>
-                            <th>NAME</th>
-                            <th>EMAIL</th>
-                            <th>ACTIONS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Admin List
+            <a class="btn btn-sm btn-primary pull-right" href="{{ route('admin.create') }}">
+                <i class="glyphicon glyphicon-plus"></i>
+                Add
+            </a>
+        </div>
+        <div class="panel-body">
+            <table id="dt_user" class="table order-column hover" data-source="{{route('admin.datatable')}}">
+                <thead>
+                    <tr>
+                        <th>AVATAR</th>
+                        <th>NAME</th>
+                        <th>EMAIL</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
     </div>
 @stop
