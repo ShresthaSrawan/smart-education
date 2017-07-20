@@ -10,16 +10,25 @@ class PostController extends Controller
 {
     public function store(StorePost $request)
     {
-        Post::create($request->data());
+        $post = Post::create($request->data());
 
-        return redirect()->route('home')->withSuccess(trans('messages.create_success', [ 'entity' => 'Post' ]));
+        $this->uploadRequestImage($request, $post);#
+
+        $post = Post::with('user', 'images')->find($post->id);
+
+        return [
+            'status' => 'ok',
+            'post' => $post
+        ];
     }
 
-    public function list(Request $request)
+    public function api(Request $request)
     {
+        $posts = Post::with('user', 'images')->orderBy('created_at','desc')->take(10)->get();
+
     	return [
     		'status' => 'ok',
-    		'posts' => Post::with('user', 'images')->take(10)->get()
+    		'posts' => $posts
 		];
     }
 }
