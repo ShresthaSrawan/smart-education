@@ -21,26 +21,28 @@
 </style>
 <template>
 	<div class="post-status">
-		<div class="form-group">
-			<textarea v-model="message" placeholder="Post activity about children" class="form-control"></textarea>
-		</div>
-		<div class="form-group">
-			<div class="thumb-wrap" v-for="image in images">
-				<img :src="image" class="thumbs">
-				<i class="fa fa-close remove-thumb" @click="removeImage(image)"></i>
+		<form ref="postForm">
+			<div class="form-group">
+				<textarea v-model="message" placeholder="Post activity about children" class="form-control"></textarea>
 			</div>
-		</div>
-		<div class="row">
-			<div class="btn-group btn-group-sm text-left col-sm-6">
-				<input type="file" id="images" @change="changeImage" multiple="multiple"
-					   class="hidden">
-				<label for="images" class="btn"><i class="fa fa-paperclip"></i></label>
-				<button class="btn"><i class="fa fa-image"></i></button>
+			<div class="form-group">
+				<div class="thumb-wrap" v-for="image in images">
+					<img :src="image" class="thumbs">
+					<i class="fa fa-close remove-thumb" @click="removeImage(image)"></i>
+				</div>
 			</div>
-			<div class="text-right col-sm-6">
-				<button class="btn" type="button" @click="submitPost">Post <i class="fa fa-save"></i></button>
+			<div class="row">
+				<div class="btn-group btn-group-sm text-left col-sm-6">
+					<input type="file" id="images" @change="changeImage" multiple="multiple"
+						   class="hidden" ref="inputImages">
+					<label for="images" class="btn"><i class="fa fa-paperclip"></i></label>
+					<button class="btn"><i class="fa fa-image"></i></button>
+				</div>
+				<div class="text-right col-sm-6">
+					<button class="btn" type="button" @click="submitPost">Post <i class="fa fa-save"></i></button>
+				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 </template>
 
@@ -80,8 +82,11 @@
 
                 axios.post('post', this.formData)
                     .then(({data}) => {
-                        this.$emit('newPost', data.post);
-                        p.message = '';
+                    	console.log('emiting');
+                        p.$emit('new_post', data.post);
+                        p.images = [];
+                        p.message = "";
+                        p.$refs.postForm.reset();
                     })
                     .catch(err => {
                         console.log(err);

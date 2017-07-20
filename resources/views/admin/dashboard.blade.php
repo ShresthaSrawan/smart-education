@@ -1,8 +1,8 @@
 <div class="row" id="app">
     <div class="col-md-8">
-        <new-post></new-post>
+        <new-post v-on:new_post="addPost"></new-post>
         <hr>
-        <post-list :posts.sync="posts"></post-list>
+        <post-list :posts.sync="posts" :fetch_posts="fetch_posts"></post-list>
     </div>
     <div class="col-md-4">
         <notice></notice>

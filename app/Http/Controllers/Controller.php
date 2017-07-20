@@ -22,7 +22,7 @@ class Controller extends BaseController
         if ($request->hasFile('image'))
         {
             $imageDetails = [
-                'path' => $request->image->store(strtolower(str_plural(class_basename($instance))))
+                'path' => $request->image->store(strtolower(str_plural(class_basename($instance))), 'public')
             ];
 
             if ($instance->image)
@@ -41,7 +41,7 @@ class Controller extends BaseController
             foreach($request->file('images') as $image)
             {
                 $imageDetails = [
-                    'path' => $image->store(strtolower(str_plural(class_basename($instance))))
+                    'path' => $image->store(strtolower(str_plural(class_basename($instance))), 'public')
                 ];
 
                 $instance->images()->create($imageDetails);

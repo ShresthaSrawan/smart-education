@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\ImageManipulator;
 use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model {
