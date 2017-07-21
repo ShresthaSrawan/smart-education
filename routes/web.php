@@ -108,7 +108,7 @@ Route::group([ 'middleware' => 'auth' ], function ()
 
     /*
     |--------------------------------------------------------------------------
-    | Parent User
+    | Post routes
     |--------------------------------------------------------------------------
     |
     |
@@ -120,13 +120,14 @@ Route::group([ 'middleware' => 'auth' ], function ()
 
     /*
     |--------------------------------------------------------------------------
-    | Parent User
+    | Notice routes
     |--------------------------------------------------------------------------
     |
     |
     */
     Route::group([ 'as' => 'notice.', 'prefix' => 'notice' ], function ()
     {
-        
+        Route::post('/', 'NoticeController@store')->name('store')->middleware('permission:create-notice');
+        Route::get('/{notice}', 'NoticeController@show')->name('show')->middleware('permission:view-notice');
     });
 });

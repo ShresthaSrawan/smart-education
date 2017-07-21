@@ -14,6 +14,8 @@
                     label="name"
                     track-by="code"
                     placeholder="Type to search"
+                    selectLabel="↲"
+                    deselectLabel="Remove"
                     open-direction="bottom"
                     :options="options"
                     :multiple="true"
@@ -22,9 +24,6 @@
                     :internal-search="false"
                     :clear-on-select="false"
                     :close-on-select="false"
-                    :options-limit="300"
-                    :limit="3"
-                    :limit-text="limitText"
                     :max-height="600"
                     :show-no-results="false"
                     @search-change="asyncFind">
@@ -36,6 +35,14 @@
             </div>
             <div class="form-group">
                 <textarea v-model="notice.message" class="form-control" placeholder="Message"></textarea>
+            </div>
+            <div class="form-group">
+                <div class="radio-inline">
+                    <label for="notify">
+                        <input type="checkbox" v-model="notice.notify" id="notify" value="1">
+                        Notify via Email
+                    </label>
+                </div>
             </div>
         </div>
         <div class="panel-footer">
@@ -53,7 +60,8 @@
                 notice: {
                     title: '',
                     to: [],
-                    message: ''
+                    message: '',
+                    notify: false
                 },
                 options: [],
                 isLoading: false
@@ -78,10 +86,7 @@
             },
             clearAll () {
               this.notice.to = [];
-            },
-            limitText (count) {
-              return `and ${count} other countries`;
-            },
+            }
         },
         components: {
             Multiselect

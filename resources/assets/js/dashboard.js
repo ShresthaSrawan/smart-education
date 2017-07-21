@@ -36,7 +36,6 @@ const app = new Vue({
                 });
         },
         addPost(post) {
-        	console.log('catching');
     		this.posts = [post, ...this.posts];
         }
     }

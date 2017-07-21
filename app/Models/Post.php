@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    protected $fillable = ['user_id', 'message', 'meta'];
+    protected $fillable = ['user_id', 'message', 'meta', 'slug'];
 
     protected $appends = ['created_at_formatted', 'thumbnail'];
 

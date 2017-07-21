@@ -16,6 +16,7 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->string('slug')->unique();
             $table->integer('user_id')->unsigned();
             $table->text('message');
             $table->text('meta')->nullable();

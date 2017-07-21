@@ -70,7 +70,7 @@ class User extends Authenticatable
         return $this->thumbnail();
     }
 
-    public function thumbnail($width=100, $height=100)
+    public function thumbnail($width = 100, $height = 100)
     {
         return $this->image ? $this->image->thumbnail($width, $height) : "http://via.placeholder.com/{$width}x{$height}?text=Smart+Education";
     }
@@ -83,5 +83,15 @@ class User extends Authenticatable
         {
             $this->attributes['api_token'] = str_random(16);
         }
+    }
+
+    /**
+     * Notices created by the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function notices()
+    {
+        return $this->hasMany(Notice::class);
     }
 }

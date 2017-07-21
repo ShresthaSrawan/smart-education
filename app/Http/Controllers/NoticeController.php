@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Notification;
+use App\Models\Notice;
+use App\Notifications\NoticeSent;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreNotice;
 
@@ -10,10 +12,15 @@ class NoticeController extends Controller
 {
     public function store(StoreNotice $request)
     {
-    	$notice = Notice::create($request->data());
+        $notice = Notice::create($request->data());
 
-    	Notification::send($request->notifiables(), new NoticeSent($notice));
+        Notification::send($request->notifiables(), new NoticeSent($notice, $request->notify));
 
-    	return redirect()->route('home')->withSuccess(trans('messages.create_success', [ 'entity' => 'Notice' ]));
+        return ['status' => 'ok'];
+    }
+
+    public function show(Notice $notice)
+    {
+        dd($notice);
     }
 }

@@ -22,7 +22,7 @@
     @if(auth()->check())
         <section class="container">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <ul class="nav nav-stacked">
@@ -38,7 +38,7 @@
                         <h3>{{ date('M') }}</h3>
                     </div>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-10">
                     @yield('content')
                 </div>
             </div>

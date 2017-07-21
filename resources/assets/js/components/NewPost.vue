@@ -32,11 +32,10 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="btn-group btn-group-sm text-left col-sm-6">
+				<div class="btn-group text-left col-sm-6">
 					<input type="file" id="images" @change="changeImage" multiple="multiple"
 						   class="hidden" ref="inputImages">
-					<label for="images" class="btn"><i class="fa fa-paperclip"></i></label>
-					<button class="btn"><i class="fa fa-image"></i></button>
+					<label for="images" class="btn"><i class="fa fa-image"></i></label>
 				</div>
 				<div class="text-right col-sm-6">
 					<button class="btn" type="button" @click="submitPost">Post <i class="fa fa-save"></i></button>
@@ -57,17 +56,20 @@
             }
         },
 		watch: {
-            'message': 'updateFormData',
-			'rawImages': 'updateFormData'
+            'message': 'updateFormMessageData',
+			'rawImages': 'updateFormImageData'
+		},
+		mounted() {
+            this.formData = new FormData();
 		},
         methods: {
             changeImage(e) {
                 this.rawImages = e.target.files || e.dataTransfer.files;
 			},
-            updateFormData() {
-                this.formData = new FormData();
-				this.formData.append('message', this.message);
-
+            updateFormMessageData() {
+                this.formData.set('message', this.message);
+            },
+            updateFormImageData() {
                 if (!this.rawImages.length)
                     return;
                 this.images = [];
@@ -82,7 +84,6 @@
 
                 axios.post('post', this.formData)
                     .then(({data}) => {
-                    	console.log('emiting');
                         p.$emit('new_post', data.post);
                         p.images = [];
                         p.message = "";

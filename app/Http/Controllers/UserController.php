@@ -19,7 +19,7 @@ class UserController extends Controller
             ->get()
             ->map(function($user){
                 return [
-                    'code' => $user->email,
+                    'code' => $user->id,
                     'name' => $user->name
                 ];
             });

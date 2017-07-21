@@ -16,10 +16,11 @@ class CreateNoticesTable extends Migration
         Schema::create('notices', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->string('slug')->unique();
             $table->integer('user_id')->unsigned();
             $table->string('title');
             $table->text('message');
-            $table->text('meta');
+            $table->text('meta')->nullable();
             $table->boolean('notify')->default(0);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
