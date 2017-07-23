@@ -49,7 +49,7 @@ class AdminController extends Controller
             $user->attachRole(USER::ADMIN);
         });
 
-        return redirect()->route('admin.index')->withSuccess(trans('messages.create_success', [ 'entity' => 'Admin' ]));
+        return redirect()->route('admin.index')->withSuccess(trans('messages.create.success', [ 'entity' => 'Admin' ]));
     }
 
     /**

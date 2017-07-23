@@ -50,7 +50,7 @@ class ParentController extends Controller
             $user->attachRole(User::PARENT);
         });
 
-        return redirect()->route('parent.index')->withSuccess(trans('messages.create_success', [ 'entity' => 'Parent' ]));
+        return redirect()->route('parent.index')->withSuccess(trans('messages.create.success', [ 'entity' => 'Parent' ]));
     }
 
     /**

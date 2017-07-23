@@ -34,6 +34,13 @@
                     {{ post.message }}
                 </p>
             </div>
+            <div class="post-tags" v-if="post.tags.length">
+                <ul>
+                    <li v-for="tag in post.tags">
+                        <a :href="'tag/'+tag.tagable.slug">{{ tag.tagable.name }}</a>
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="post-footer">
             <comment-list></comment-list>

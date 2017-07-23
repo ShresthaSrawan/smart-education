@@ -33,18 +33,18 @@ class Notice extends Model
         return 'slug';
     }
 
+    /**
+     * set the title and a suitable unique slug
+     *
+     * @param $value
+     */
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = $value;
 
         if ( ! $this->exists)
         {
-            $this->setUniqueSlug();
+                $this->attributes['slug'] = 'NOT-' . date('Ymdhis') . '-' . str_random(5);
         }
-    }
-
-    public function setUniqueSlug()
-    {
-
     }
 }

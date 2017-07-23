@@ -50,7 +50,7 @@ class TeacherController extends Controller
             $user->attachRole(User::TEACHER);
         });
 
-        return redirect()->route('teacher.index')->withSuccess(trans('messages.create_success', [ 'entity' => 'Admin' ]));
+        return redirect()->route('teacher.index')->withSuccess(trans('messages.create.success', [ 'entity' => 'Admin' ]));
     }
 
     /**

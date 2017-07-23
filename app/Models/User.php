@@ -36,7 +36,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $appends = [ 'is_grade_assigned', 'name', 'thumbnail' ];
+    protected $appends = [ 'is_grade_assigned', 'name', 'thumbnail', 'slug' ];
 
     public function getRouteKeyName()
     {
@@ -93,5 +93,10 @@ class User extends Authenticatable
     public function notices()
     {
         return $this->hasMany(Notice::class);
+    }
+
+    public function getSlugAttribute()
+    {
+        return $this->username;
     }
 }

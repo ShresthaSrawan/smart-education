@@ -41,6 +41,6 @@ class GradeController extends Controller
             $grade = Grade::create($request->data());
         });
 
-        return redirect()->route('grade.index')->withSuccess(trans('messages.create_success', [ 'entity' => 'Grade' ]));
+        return redirect()->route('grade.index')->withSuccess(trans('messages.create.success', [ 'entity' => 'Grade' ]));
     }
 }

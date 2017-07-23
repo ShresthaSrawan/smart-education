@@ -3,10 +3,22 @@
 		height: 70px;
 		width: auto;
 	}
+
+	.thumbs-container {
+		padding: 5px;
+		height: 81px;
+		background: rgba(0,0,0,0.05);
+	}
+
 	.thumb-wrap {
 		position: relative;
 		display: inline-block;
+		height: 72px;
+		width: 70px;
+		background: rgba(0,0,0,0.1);
+		border: 1px solid rgba(0,0,0,0.3);
 	}
+
 	.remove-thumb {
 		position: absolute;
 		right: -5px;
@@ -16,26 +28,83 @@
 		background: white;
 		padding: 2px;
 		border-radius: 10px;
-		border: 1px solid rgba(0,0,0,0.1);
+		border: 1px solid rgba(0, 0, 0, 0.1);
+	}
+
+	.post-status {
+		position: relative;
+	}
+
+	.loader {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		background: rgba(0, 0, 0, 0.05);
+		z-index: 1;
+	}
+
+	.btn-add {
+		padding: 24px 28px;
 	}
 </style>
 <template>
 	<div class="post-status">
+		<div class="loader" v-if="busy">
+			<loader></loader>
+		</div>
 		<form ref="postForm">
 			<div class="form-group">
 				<textarea v-model="message" placeholder="Post activity about children" class="form-control"></textarea>
+				<multiselect
+						v-if="showTags"
+						v-model="tags"
+						id="ajax"
+						label="name"
+						track-by="code"
+						placeholder="Type to search"
+						selectLabel="↲"
+						deselectLabel="Remove"
+						open-direction="bottom"
+						:taggable="true"
+						:options="options"
+						:multiple="true"
+						:searchable="true"
+						:loading="isLoading"
+						:internal-search="false"
+						:clear-on-select="false"
+						:close-on-select="false"
+						:max-height="600"
+						:show-no-results="false"
+						@tag="addTag"
+						@search-change="asyncFind">
+					<template slot="clear" scope="props">
+						<div class="multiselect__clear" v-if="tags.length"
+							 @mousedown.prevent.stop="clearAll(props.search)"></div>
+					</template>
+					<span slot="noResult">Oops! No elements found. Consider changing the search query.</span>
+				</multiselect>
 			</div>
-			<div class="form-group">
-				<div class="thumb-wrap" v-for="image in images">
+			<div class="form-group thumbs-container" v-if="showImage">
+				<div class="thumb-wrap" v-for="(image, i) in images">
 					<img :src="image" class="thumbs">
-					<i class="fa fa-close remove-thumb" @click="removeImage(image)"></i>
+					<i class="fa fa-close remove-thumb" @click="removeImage(i)"></i>
+				</div>
+				<input type="file" id="images" @change="changeImage" multiple="multiple"
+					   class="hidden">
+				<div class="thumb-wrap">
+					<label for="images" class="btn-add">
+						<span>
+							<i class="fa fa-plus"></i>
+						</span>
+					</label>
 				</div>
 			</div>
 			<div class="row">
 				<div class="btn-group text-left col-sm-6">
-					<input type="file" id="images" @change="changeImage" multiple="multiple"
-						   class="hidden" ref="inputImages">
-					<label for="images" class="btn"><i class="fa fa-image"></i></label>
+					<button class="btn btn-default" @click="showImage = !showImage"
+							type="button"><i class="fa fa-image"></i></button>
+					<button class="btn btn-default" @click="showTags = !showTags"
+							type="button"><i class="fa fa-tags"></i></button>
 				</div>
 				<div class="text-right col-sm-6">
 					<button class="btn" type="button" @click="submitPost">Post <i class="fa fa-save"></i></button>
@@ -46,48 +115,66 @@
 </template>
 
 <script>
+    import Multiselect from 'vue-multiselect';
+    import Loader from './Loader';
+
     export default {
         data() {
             return {
-				message: '',
-				images: [],
+                message: '',
+                images: [],
                 rawImages: [],
-				formData: null
+                tags: [],
+                options: [],
+                isLoading: false,
+                showTags: false,
+                showImage: false,
+                busy: false
             }
         },
-		watch: {
-            'message': 'updateFormMessageData',
-			'rawImages': 'updateFormImageData'
-		},
-		mounted() {
-            this.formData = new FormData();
-		},
+        watch: {
+            'rawImages': 'updateFormImageData'
+        },
         methods: {
+            formData() {
+                let formData = new FormData();
+                formData.set('message', this.message);
+                this.tags.forEach((tag, i) => {
+                    if (tag.type) {
+                        formData.set('tags[' + i + '][tagable_id]', tag.id);
+                        formData.set('tags[' + i + '][tagable_type]', tag.type);
+                    } else {
+                        formData.set('tags[' + i + '][name]', tag.name);
+                    }
+                });
+                this.rawImages.forEach((image, i) => formData.append(`images[${i}]`, image));
+
+                return formData;
+            },
             changeImage(e) {
-                this.rawImages = e.target.files || e.dataTransfer.files;
-			},
-            updateFormMessageData() {
-                this.formData.set('message', this.message);
+                this.rawImages = Array.from(e.target.files || e.dataTransfer.files);
             },
             updateFormImageData() {
-                if (!this.rawImages.length)
+                let p = this;
+                p.busy = true;
+                if (!p.rawImages.length)
                     return;
-                this.images = [];
-
-                for (let k = 0; k < this.rawImages.length; k++) {
-                    this.formData.append(`images[${k}]`, this.rawImages[k]);
-                    this.createImage(this.rawImages[k])
-                }
-			},
+                p.images = [];
+                p.rawImages.forEach(image => p.createImage(image));
+                p.busy = false;
+            },
             submitPost() {
                 const p = this;
-
-                axios.post('post', this.formData)
+                p.busy = true;
+                axios.post('post', this.formData())
                     .then(({data}) => {
                         p.$emit('new_post', data.post);
                         p.images = [];
                         p.message = "";
+                        p.tags = [];
                         p.$refs.postForm.reset();
+                        p.busy = false;
+                        alert('posted');
                     })
                     .catch(err => {
                         console.log(err);
@@ -103,13 +190,39 @@
                 };
                 reader.readAsDataURL(file);
             },
-            removeImage(image) {
+            removeImage(i) {
                 let p = this;
-                let i = p.images.indexOf(image);
-                if(i != -1) {
-                    p.images.splice(i, 1);
-                }
-            }
+                console.log(p.images, p.rawImages, i);
+				p.images.splice(i, 1);
+				p.rawImages.splice(i, 1);
+            },
+            asyncFind(query) {
+                this.isLoading = true;
+                axios.get('/api/tags/search', {
+                    params: {
+                        api_token: API_TOKEN,
+                        query: query
+                    }
+                }).then(response => {
+                    this.options = response.data;
+                    this.isLoading = false;
+                });
+            },
+            clearAll() {
+                this.tags = [];
+            },
+            addTag(newTag) {
+                const tag = {
+                    name: newTag,
+                    code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
+                };
+                this.options.push(tag);
+                this.tags.push(tag);
+            },
+        },
+        components: {
+            Multiselect,
+            Loader
         }
     }
 </script>

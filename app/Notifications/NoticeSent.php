@@ -50,7 +50,7 @@ class NoticeSent extends Notification
      */
     public function toMail($notifiable)
     {
-        return ( new MailMessage )->line('Notification Received')->action('View', route('notice.view', $this->notice->slug))->line('Thank you for using our application!');
+        return ( new MailMessage )->line('Notification Received')->action('View', route('notice.show', $this->notice->slug))->line('Thank you for using our application!');
     }
 
     /**

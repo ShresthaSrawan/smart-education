@@ -12,7 +12,8 @@ Vue.use('infiniteScroll', require('vue-infinite-scroll'));
 const app = new Vue({
     el: '#app',
     data: {
-        posts: []
+        posts: [],
+        page_no: 0
     },
     mounted() {
     	this.fetch_posts();
@@ -21,13 +22,15 @@ const app = new Vue({
     	fetch_posts() {
             const p = this;
             p.busy = true;
+            p.page_no = p.page_no + 1;
             axios.get('/api/post/list',{
                 params: {
-                    api_token: API_TOKEN
+                    api_token: API_TOKEN,
+                    page: p.page_no
                 }
             })
                 .then(({data}) => {
-                    p.posts = [...p.posts, ...data.posts];
+                    p.posts = [...p.posts, ...data.posts.data];
                     p.busy = false;
                 })
                 .catch(err => {

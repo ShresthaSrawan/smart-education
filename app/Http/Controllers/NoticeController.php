@@ -16,7 +16,7 @@ class NoticeController extends Controller
 
         Notification::send($request->notifiables(), new NoticeSent($notice, $request->notify));
 
-        return ['status' => 'ok'];
+        return ['status' => 'ok', 'message' => trans('messages.create.success', [ 'entity' => 'Notice' ])];
     }
 
     public function show(Notice $notice)
