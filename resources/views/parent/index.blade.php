@@ -39,7 +39,7 @@
         var table = $('#dt_user').DataTable({
             "dom": "rBftip",
             "language": {
-                "processing": "<h2 id="dt_loading"><span class="fa fa - spinner fa-pulse"></span> Loading...</h2>"
+                "processing": "<h2 id='dt_loading'><span class='fa fa - spinner fa-pulse'></span> Loading...</h2>"
             },
             "buttons": [
                 'pageLength', 'colvis'

@@ -33,7 +33,9 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('admin.create');
+        $titles = [ '' => 'None', 'Mr.' => 'Mr.', 'Miss.' => 'Miss.', 'Mrs.' => 'Mrs.' ];
+
+        return view('admin.create', compact('titles'));
     }
 
     /**
@@ -43,8 +45,7 @@ class AdminController extends Controller
      */
     public function store(StoreUser $request)
     {
-        DB::transaction(function () use ($request)
-        {
+        DB::transaction(function () use ($request) {
             $user = User::create($request->data());
             $user->attachRole(USER::ADMIN);
         });

@@ -8,10 +8,22 @@ class Subject extends Model
 {
     protected $fillable = ['name', 'slug', 'grade_id', 'teacher_id'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function teacher()
     {
         return $this->belongsTo(User::class, 'teacher_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
+    }
+
     /**
      * Set the title attribute and the slug.
      *

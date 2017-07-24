@@ -6,6 +6,7 @@ Vue.component('Loader', require('./components/Loader'));
 Vue.component('Notice', require('./components/Notice'));
 Vue.component('PostList', require('./components/PostList'));
 Vue.component('NewPost', require('./components/NewPost'));
+Vue.component('Date', require('./components/Date'));
 
 Vue.use('infiniteScroll', require('vue-infinite-scroll'));
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreParent;
-use App\Http\Requests\StoreUser;
+use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -34,16 +34,19 @@ class ParentController extends Controller
      */
     public function create()
     {
-        return view('parent.create');
+        $titles = [ '' => 'None', 'Mr.' => 'Mr.', 'Miss.' => 'Miss.', 'Mrs.' => 'Mrs.' ];
+
+        return view('parent.create', compact('titles'));
     }
 
     /**
      * Store a newly created resource in storage.;
-     * @param StoreUser $request
+     * @param StoreParent $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUser $request)
+    public function store(Request $request)
     {
+        dd(1);
         DB::transaction(function () use ($request)
         {
             $user = User::create($request->data());
@@ -70,7 +73,10 @@ class ParentController extends Controller
      */
     public function edit(User $user)
     {
-        return view('parent.edit', compact($user));
+        $titles = [ '' => 'None', 'Mr.' => 'Mr.', 'Miss.' => 'Miss.', 'Mrs.' => 'Mrs.' ];
+        $students = Student::get()->pluck('name', 'id');
+
+        return view('parent.edit', compact('user', 'titles', 'students'));
     }
 
     /**

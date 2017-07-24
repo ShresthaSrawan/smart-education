@@ -1,12 +1,7 @@
 <div id="userapp">
     <div class="form-group">
         <label for="title">Title</label>
-        <select name="title" class="form-control" id="title">
-            <option value="">None</option>
-            <option value="Mr.">Mr.</option>
-            <option value="Miss.">Miss.</option>
-            <option value="Mrs.">Mrs.</option>
-        </select>
+        {{ Form::select('title', $titles ,old('title'), ['class' => 'form-control']) }}
     </div>
     <div class="form-group">
         <label for="first_name">First Name</label>

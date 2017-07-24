@@ -87,23 +87,23 @@
 			<div class="form-group thumbs-container" v-if="showImage">
 				<div class="thumb-wrap" v-for="(image, i) in images">
 					<img :src="image" class="thumbs">
-					<i class="fa fa-close remove-thumb" @click="removeImage(i)"></i>
+					<!--<i class="fa fa-close remove-thumb" @click="removeImage(i)"></i>-->
 				</div>
-				<input type="file" id="images" @change="changeImage" multiple="multiple"
+				<input type="file" accept="image/*" id="images" @change="changeImage" multiple="multiple"
 					   class="hidden">
 				<div class="thumb-wrap">
 					<label for="images" class="btn-add">
 						<span>
-							<i class="fa fa-plus"></i>
+							<i class="fa fa-image"></i>
 						</span>
 					</label>
 				</div>
 			</div>
 			<div class="row">
 				<div class="btn-group text-left col-sm-6">
-					<button class="btn btn-default" @click="showImage = !showImage"
+					<button class="btn btn-default" :class="{'active' : showImage}" @click="showImage = !showImage"
 							type="button"><i class="fa fa-image"></i></button>
-					<button class="btn btn-default" @click="showTags = !showTags"
+					<button class="btn btn-default" :class="{'active' : showTags}" @click="showTags = !showTags"
 							type="button"><i class="fa fa-tags"></i></button>
 				</div>
 				<div class="text-right col-sm-6">

@@ -41,7 +41,7 @@ class StorePost extends FormRequest
 
         foreach ($this->input('tags', []) as $t)
         {
-            if (array_key_exists('type', $t))
+            if (array_key_exists('tagable_type', $t))
             {
                 $tags[] = $t;
             }

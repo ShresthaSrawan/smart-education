@@ -19,8 +19,10 @@ class CreateStudentsTable extends Migration
             $table->string('symbol');
             $table->string('first_name');
             $table->string('last_name');
+            $table->integer('grade_id')->unsigned()->nullable();
             $table->integer('parent_id')->unsigned()->nullable();
             $table->timestamps();
+            $table->foreign('grade_id')->references('id')->on('grades')->onDelete('restrict');
             $table->foreign('parent_id')->references('id')->on('users')->onDelete('restrict');
         });
     }
